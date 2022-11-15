@@ -97,6 +97,11 @@ class Bsi {
 	 */
 	private function load_dependencies() {
 		/**
+		 * External dependencies
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/vendor/autoload.php';
+
+		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */

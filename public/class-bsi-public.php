@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -19,7 +20,8 @@
  * @subpackage Bsi/public
  * @author     Enrique Chavez <tmeister@gmail.com>
  */
-class Bsi_Public {
+class Bsi_Public
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,7 +49,8 @@ class Bsi_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct( string $plugin_name, string $version ) {
+	public function __construct(string $plugin_name, string $version)
+	{
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 	}
@@ -58,8 +61,9 @@ class Bsi_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/bsi-public.css', [], $this->version );
+	public function enqueue_styles()
+	{
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/bsi-public.css', [], $this->version);
 	}
 
 	/**
@@ -67,25 +71,27 @@ class Bsi_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/bsi-public.js', [ 'jquery' ], $this->version, false );
+	public function enqueue_scripts()
+	{
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/bsi-public.js', ['jquery'], $this->version, false);
 	}
 
 	// Add Custom rest api endpoints
-	public function add_rest_endpoints() {
+	public function add_rest_endpoints()
+	{
 		// register endpoints
 		// TODO: Add authentication callback
-		register_rest_route( 'better-social-images/v1', 'generate', [
+		register_rest_route('better-social-images/v1', 'image', [
 			'methods'             => WP_REST_Server::CREATABLE,
-			'callback'            => [ $this, 'parse_generate_request' ],
+			'callback'            => [$this, 'parse_generate_request'],
 			'permission_callback' => '__return_true',
-		] );
+		]);
 	}
 
-	public function parse_generate_request( $request ): array {
+	public function parse_generate_request($request): array
+	{
 		$params = $request->get_json_params();
 
-		return [ 'ok' => true, 'foo' => $params ];
-
+		return ['ok' => true, 'foo' => $params];
 	}
 }
