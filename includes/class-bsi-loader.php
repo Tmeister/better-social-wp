@@ -1,4 +1,7 @@
 <?php
+
+namespace Tmeister\Bsi;
+
 /**
  * Register all actions and filters for the plugin
  *

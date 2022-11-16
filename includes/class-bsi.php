@@ -1,4 +1,7 @@
 <?php
+
+namespace Tmeister\Bsi;
+
 /**
  * The file that defines the core plugin class
  *

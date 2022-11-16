@@ -1,4 +1,7 @@
 <?php
+
+namespace Tmeister\Bsi;
+
 /**
  * Define the internationalization functionality
  *

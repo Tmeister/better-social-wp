@@ -1,4 +1,7 @@
 <?php
+
+namespace Tmeister\Bsi;
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -75,5 +78,5 @@ class Bsi_Admin {
 		if(!extension_loaded('gd')) {
 			// Add notice...
 		}
-	}	
+	}
 }

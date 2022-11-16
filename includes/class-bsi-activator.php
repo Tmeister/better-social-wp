@@ -1,4 +1,7 @@
 <?php
+
+namespace Tmeister\Bsi;
+
 /**
  * Fired during plugin activation
  *

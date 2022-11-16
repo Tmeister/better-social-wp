@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The plugin bootstrap file
  *
@@ -25,6 +26,10 @@
  */
 
 // If this file is called directly, abort.
+use Tmeister\Bsi\Bsi;
+use Tmeister\Bsi\Bsi_Activator;
+use Tmeister\Bsi\Bsi_Deactivator;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -34,7 +39,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'BSI_VERSION', '1.0.0' );
+const BSI_VERSION = '1.0.0';
 
 /**
  * The code that runs during plugin activation.

@@ -1,5 +1,10 @@
 <?php
 
+namespace Tmeister\Bsi;
+
+use Intervention\Image\ImageManagerStatic as Image;
+use WP_REST_Server;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -23,75 +28,77 @@
 class Bsi_Public
 {
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string $plugin_name The ID of this plugin.
-	 */
-	private string $plugin_name;
+    /**
+     * The ID of this plugin.
+     *
+     * @since    1.0.0
+     * @access   private
+     * @var      string $plugin_name The ID of this plugin.
+     */
+    private string $plugin_name;
 
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string $version The current version of this plugin.
-	 */
-	private string $version;
+    /**
+     * The version of this plugin.
+     *
+     * @since    1.0.0
+     * @access   private
+     * @var      string $version The current version of this plugin.
+     */
+    private string $version;
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @param string $plugin_name The name of the plugin.
-	 * @param string $version The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 */
-	public function __construct(string $plugin_name, string $version)
-	{
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-	}
+    /**
+     * Initialize the class and set its properties.
+     *
+     * @param  string  $plugin_name  The name of the plugin.
+     * @param  string  $version  The version of this plugin.
+     *
+     * @since    1.0.0
+     */
+    public function __construct(string $plugin_name, string $version)
+    {
+        $this->plugin_name = $plugin_name;
+        $this->version     = $version;
+    }
 
 
-	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles()
-	{
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/bsi-public.css', [], $this->version);
-	}
+    /**
+     * Register the stylesheets for the public-facing side of the site.
+     *
+     * @since    1.0.0
+     */
+    public function enqueue_styles()
+    {
+        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__).'css/bsi-public.css', [], $this->version);
+    }
 
-	/**
-	 * Register the JavaScript for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts()
-	{
-		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/bsi-public.js', ['jquery'], $this->version, false);
-	}
+    /**
+     * Register the JavaScript for the public-facing side of the site.
+     *
+     * @since    1.0.0
+     */
+    public function enqueue_scripts()
+    {
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__).'js/bsi-public.js', [], $this->version, false);
+    }
 
-	// Add Custom rest api endpoints
-	public function add_rest_endpoints()
-	{
-		// register endpoints
-		// TODO: Add authentication callback
-		register_rest_route('better-social-images/v1', 'image', [
-			'methods'             => WP_REST_Server::CREATABLE,
-			'callback'            => [$this, 'parse_generate_request'],
-			'permission_callback' => '__return_true',
-		]);
-	}
+    // Add Custom rest api endpoints
+    public function add_rest_endpoints()
+    {
+        // register endpoints
+        // TODO: Add authentication callback
+        register_rest_route('bsi/v1', 'image', [
+            'methods'             => WP_REST_Server::CREATABLE,
+            'callback'            => [$this, 'parse_generate_request'],
+            'permission_callback' => '__return_true',
+        ]);
+    }
 
-	public function parse_generate_request($request): array
-	{
-		$params = $request->get_json_params();
+    public function parse_generate_request($request): array
+    {
+        $params = $request->get_json_params();
 
-		return ['ok' => true, 'foo' => $params];
-	}
+        $img = Image::canvas(1200, 630, '#ff000');
+
+        echo $img->response('png');
+    }
 }
