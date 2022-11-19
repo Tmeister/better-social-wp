@@ -39,7 +39,12 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-const BSI_VERSION = '1.0.0';
+const  BSI_VERSION = '1.0.0';
+
+/**
+ *  Define the fonts directory
+ */
+define("BSI_FONTS_DIR", plugin_dir_path( __FILE__ ) . 'admin/assets/fonts/');
 
 /**
  * The code that runs during plugin activation.

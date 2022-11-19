@@ -2,8 +2,6 @@
 
 namespace Tmeister\Bsi;
 
-use Intervention\Image\ImageManagerStatic as Image;
-use WP_REST_Server;
 
 /**
  * The public-facing functionality of the plugin.
@@ -79,26 +77,5 @@ class Bsi_Public
     public function enqueue_scripts()
     {
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__).'js/bsi-public.js', [], $this->version, false);
-    }
-
-    // Add Custom rest api endpoints
-    public function add_rest_endpoints()
-    {
-        // register endpoints
-        // TODO: Add authentication callback
-        register_rest_route('bsi/v1', 'image', [
-            'methods'             => WP_REST_Server::CREATABLE,
-            'callback'            => [$this, 'parse_generate_request'],
-            'permission_callback' => '__return_true',
-        ]);
-    }
-
-    public function parse_generate_request($request): array
-    {
-        $params = $request->get_json_params();
-
-        $img = Image::canvas(1200, 630, '#ff000');
-
-        echo $img->response('png');
     }
 }
